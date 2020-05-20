@@ -19,7 +19,7 @@ def SelectionSortWithSwapping(array): # Space complexity: O(1)
 
     return array
 
-def SelectionSort(array): # O(n^2)
+def SelectionSort(array): # Time complexity: O(n^2)
 
     sorted = []
     elem_count = len(array)
