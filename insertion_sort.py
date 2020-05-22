@@ -32,5 +32,17 @@ input = [2, 8, 5, 3, 9, 4]
 print('Input:  ' + str(input))
 print('Result: ' + str(InsertionSort(input)))
 
-print('Time complexity:  O(n^2)')
+print('Time complexity:  O(n^2), Best: O(n)')
 print('Space complexity: O(n)')
+
+'''
+The primary advantage of insertion sort over selection sort is that selection sort 
+must always scan all remaining elements to find the absolute smallest element in the 
+unsorted portion of the list, while insertion sort requires only a single comparison 
+when the (k + 1)-st element is greater than the k-th element; when this is frequently 
+true (such as if the input array is already sorted or partially sorted), insertion sort is 
+distinctly more efficient compared to selection sort. 
+
+- LESS COMPARISONS than Selection sort :)
+- MORE WRITES than Selection sort :( . Will write O(n^2) times, whereas Selection sort O(n) times
+'''
