@@ -1,0 +1,55 @@
+'''
+Depth first search uses STACK
+LIFO - Last In, First Out
+
+It's great for discovering all possible scenarios.
+
+1.Choose a node
+2. Visit unvisited neighbour
+3. Continue until there's no adjacent unvisited node.
+4. Backtrack.
+'''
+
+'''    Time: O (V+E)          Space: O(V)
+V - vertices (nodes)
+E - edges
+'''
+
+from collections import deque
+
+
+def DFS(graph):
+    if graph is None or len(graph) == 0:
+        return []
+
+    print("Graph: " + str(graph))
+
+    visited = [] * len(graph)
+    stack = deque()
+    print(stack)
+    stack.append(graph[0][0])
+    result = []
+
+    while len(stack) != 0:
+        print("Stack: " + str(stack))
+        print("Visited: " + str(visited))
+        node = stack.pop()
+
+        if node not in visited:
+            visited.append(int(node))
+            result.append(int(node))
+
+        adj = graph[node]
+        for adjacent in adj[1:]:
+            if adjacent not in visited:
+                stack.append(adjacent)
+
+    return result
+
+# 5 vertices 4 edges
+# pairs:  0 1      0 2      0 3      2 4
+# result: starting from 0 dfs will be 0 1 2 4 3.
+
+adjacency_list = [[0, 1, 2, 3], [1, 0], [2, 0, 4], [3, 0], [4, 2]]
+result = DFS(adjacency_list)
+print('Result: ' + str(result))
