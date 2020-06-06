@@ -21,15 +21,24 @@ namespace GraphBFS
 
             var result2 = BFS(adjacency_list2);
             var expected = new List<int>() { 0, 1, 2, 3, 4, 6, 5, 7 };
+            Console.WriteLine("Expected: " + String.Join(',', expected));
             Console.WriteLine("Result: " + String.Join(',', result2));
+
+            var result1 = DFS(adjacency_list2);
+            var expected1 = new List<int>() { 0, 1, 2, 3, 4, 6, 5, 7 };
+            Console.WriteLine("Expected: " + String.Join(',', expected1));
+            Console.WriteLine("Result: " + String.Join(',', result1));
+
             Console.ReadKey();
 		}
 
+        // BREADTH FIRST SEARCH
         static IEnumerable<int> BFS(IEnumerable<IEnumerable<int>> graph) {
 
             if (graph is null || graph.Count() == 0)
                 return new List<int>();
 
+            Console.WriteLine("BREADTH FIRST SEARCH");
             Console.WriteLine("Graph: " + GraphToString(graph));
 
             var visited = new HashSet<int>();
@@ -62,6 +71,47 @@ namespace GraphBFS
 
             return result;
        }
+
+        // DEPTH FIRST SEARCH
+        static IEnumerable<int> DFS(IEnumerable<IEnumerable<int>> graph)
+        {
+
+            if (graph is null || graph.Count() == 0)
+                return new List<int>();
+
+            Console.WriteLine("DEPTH FIRST SEARCH");
+            Console.WriteLine("Graph: " + GraphToString(graph));
+
+            var visited = new HashSet<int>();
+            var stack = new Stack<int>();
+            stack.Push(graph.First().First());
+            var result = new List<int>();
+            int iteration = 0;
+
+            while (stack.Count() != 0)
+            {
+                Console.WriteLine($"{++iteration}. Stack: " + String.Join(',', stack.ToArray()));
+                Console.WriteLine($"   Visited: " + String.Join(',', visited.ToArray()));
+
+                var node = stack.Pop();
+
+                if (!visited.Contains(node))
+                {
+                    visited.Add(node);
+                    result.Add(node);
+                }
+
+                var list = graph.Where(x => x.First() == node).First();
+
+                foreach (var adjacent in list)
+                {
+                    if (!visited.Contains(adjacent))
+                        stack.Push(adjacent);
+                }
+            }
+
+            return result;
+        }
 
         private static string GraphToString<T>(IEnumerable<IEnumerable<T>> graph)
         {
