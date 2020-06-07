@@ -28,30 +28,38 @@ Input: "{[]}"
 Output: true
     */
 public class Solution {
-    public bool IsValid(string s) {
+    public bool ValidPalindrome(string s) {
         
-        var stack = new Stack<char>();
-        
-        foreach(var c in s) {
-            
-            if (IsOpenBracket(c)) {
-                stack.Push(c);
-            } else {
-                if (stack.Count == 0 || !IsValidPair(stack.Pop(), c))
-                    return false;
-            }
-        }
-        
-        return stack.Count == 0;
-        }
-     
-    private bool IsValidPair(char opening, char closing) {
-        return (opening == '[' && closing == ']') ||
-             (opening == '(' && closing == ')') ||
-             (opening == '{' && closing == '}');
+        return ValidPalindrome(s, true);
     }
     
-    private bool IsOpenBracket(char c) {
-        return c == '[' || c == '(' || c=='{';
-    }
- }
+     public static bool ValidPalindrome(string s, bool chance)
+        {
+
+            int len = s.Length;
+            int middle = len / 2;
+           
+            for (int i = 0, j = len - 1; i < middle; ++i, --j)
+            {
+                if (s[i] == s[j])
+                    continue;
+                else if (!chance)
+                   return false;
+                else
+                {
+                    //Ignore invalid character only once
+                    if (s[i] == s[j - 1] || s[i + 1] == s[j])
+                    {
+                        Console.WriteLine($"Assessing {s.Substring(i, j - i)}");
+                        return ValidPalindrome(s.Substring(i, j - i), false) || ValidPalindrome(s.Substring(i + 1, j - i), false);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+}
